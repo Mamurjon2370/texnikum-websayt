@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Biz haqimizda — {{ site.name }}{% endblock %}
+{% block content %}
+{% include "core/_pagehead.html" with head_title="Biz haqimizda" %}
+<section class="py-5"><div class="container">
+  <div class="row g-5">
+    <div class="col-lg-8">
+      <h3>{{ site.name }}</h3>
+      <p>{{ site.about_short|default:"Texnikum o'rta bo'g'in malakali kadrlarni tayyorlashga ixtisoslashgan." }}</p>
+      <div class="info-grid mt-4">
+        <div class="info-item"><i class="bi bi-calendar-check"></i><div><b>Tashkil topgan</b><span>{{ site.founded_year }}-yil</span></div></div>
+        <div class="info-item"><i class="bi bi-bullseye"></i><div><b>Maqsad</b><span>{{ site.slogan }}</span></div></div>
+        <div class="info-item"><i class="bi bi-bank"></i><div><b>Tegishli</b><span>{{ site.ministry }}</span></div></div>
+        <div class="info-item"><i class="bi bi-geo-alt"></i><div><b>Manzil</b><span>{{ site.address }}</span></div></div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm"><div class="card-body">
+        <h6 class="mb-3">Bog'lanish</h6>
+        <p class="mb-2 small"><i class="bi bi-telephone text-primary"></i> {{ site.phone }}</p>
+        <p class="mb-2 small"><i class="bi bi-envelope text-primary"></i> {{ site.email }}</p>
+        <p class="mb-0 small"><i class="bi bi-clock text-primary"></i> {{ site.work_hours }}</p>
+      </div></div>
+    </div>
+  </div>
+
+  {% if management %}
+  <div class="section-head text-center mt-5"><h2>Rahbariyat</h2></div>
+  <div class="row g-4">
+    {% for s in management %}
+    <div class="col-md-4 col-lg-3"><div class="staff-card">
+      <div class="staff-photo">{% if s.photo %}<img src="{{ s.photo.url }}">{% else %}<i class="bi bi-person"></i>{% endif %}</div>
+      <h6>{{ s.full_name }}</h6><span class="pos">{{ s.position }}</span>
+    </div></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if teachers %}
+  <div class="section-head text-center mt-5"><h2>O'qituvchilar</h2></div>
+  <div class="row g-4">
+    {% for s in teachers %}
+    <div class="col-md-4 col-lg-3"><div class="staff-card">
+      <div class="staff-photo">{% if s.photo %}<img src="{{ s.photo.url }}">{% else %}<i class="bi bi-person"></i>{% endif %}</div>
+      <h6>{{ s.full_name }}</h6><span class="pos">{{ s.position }}</span>
+    </div></div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  {% if documents %}
+  <div class="section-head text-center mt-5"><h2>Meyoriy hujjatlar</h2></div>
+  <div class="list-group doc-list">
+    {% for d in documents %}
+    <a href="{{ d.file.url }}" class="list-group-item d-flex justify-content-between align-items-center" target="_blank">
+      <span><i class="bi bi-file-earmark-pdf text-danger"></i> {{ d.title }}</span>
+      <i class="bi bi-download"></i></a>
+    {% endfor %}
+  </div>
+  {% endif %}
+</div></section>
+{% endblock %}

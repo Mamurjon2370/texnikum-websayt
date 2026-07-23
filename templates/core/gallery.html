@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}Galereya — {{ site.name }}{% endblock %}
+{% block content %}
+{% include "core/_pagehead.html" with head_title="Fotogalereya" %}
+<section class="py-5"><div class="container"><div class="row g-3">
+  {% for img in images %}
+  <div class="col-6 col-md-4 col-lg-3"><div class="gallery-item">
+    <img src="{{ img.image.url }}" alt="{{ img.title }}">
+  </div></div>
+  {% empty %}<p class="text-muted text-center">Rasmlar tez orada qo'shiladi.</p>{% endfor %}
+</div></div></section>
+{% endblock %}

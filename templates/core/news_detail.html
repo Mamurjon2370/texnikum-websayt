@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{{ item.title }} — {{ site.name }}{% endblock %}
+{% block content %}
+{% include "core/_pagehead.html" with head_title="Yangilik" %}
+<section class="py-5"><div class="container"><div class="row g-5">
+  <div class="col-lg-8">
+    <span class="news-date"><i class="bi bi-calendar3"></i> {{ item.published_at|date:"d.m.Y" }} · <i class="bi bi-eye"></i> {{ item.views }}</span>
+    <h2 class="mt-2">{{ item.title }}</h2>
+    {% if item.image %}<img src="{{ item.image.url }}" class="img-fluid rounded my-3">{% endif %}
+    <div class="news-content">{{ item.body|linebreaks }}</div>
+  </div>
+  <div class="col-lg-4">
+    <h6 class="mb-3">Boshqa yangiliklar</h6>
+    {% for r in related %}
+    <a href="{% url 'news_detail' r.slug %}" class="related-item">
+      <span class="rd">{{ r.published_at|date:"d.m.Y" }}</span>{{ r.title }}</a>
+    {% endfor %}
+  </div>
+</div></div></section>
+{% endblock %}

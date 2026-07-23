@@ -1,0 +1,12 @@
+{% load static %}
+<section class="page-head">
+  <div class="container">
+    <h1>{{ head_title }}</h1>
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{% url 'home' %}">Bosh sahifa</a></li>
+        <li class="breadcrumb-item active">{{ head_title }}</li>
+      </ol>
+    </nav>
+  </div>
+</section>

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}Yangiliklar — {{ site.name }}{% endblock %}
+{% block content %}
+{% include "core/_pagehead.html" with head_title="Yangiliklar" %}
+<section class="py-5"><div class="container">
+  <form class="row justify-content-center mb-4" method="get">
+    <div class="col-md-6"><div class="input-group">
+      <input class="form-control" name="q" value="{{ q }}" placeholder="Yangiliklardan qidirish...">
+      <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+    </div></div>
+  </form>
+  <div class="row g-4">
+    {% for n in page_obj %}
+    <div class="col-md-6 col-lg-4"><article class="news-card">
+      <div class="news-thumb">{% if n.image %}<img src="{{ n.image.url }}">{% else %}<i class="bi bi-newspaper"></i>{% endif %}</div>
+      <div class="news-body">
+        <span class="news-date"><i class="bi bi-calendar3"></i> {{ n.published_at|date:"d.m.Y" }} · <i class="bi bi-eye"></i> {{ n.views }}</span>
+        <h5><a href="{% url 'news_detail' n.slug %}">{{ n.title }}</a></h5>
+        <p class="small text-muted">{{ n.summary|default:n.body|truncatewords:18 }}</p>
+        <a href="{% url 'news_detail' n.slug %}" class="pc-link">Batafsil <i class="bi bi-arrow-right"></i></a>
+      </div>
+    </article></div>
+    {% empty %}<p class="text-muted text-center">Yangiliklar topilmadi.</p>{% endfor %}
+  </div>
+  {% if page_obj.has_other_pages %}
+  <nav class="mt-4"><ul class="pagination justify-content-center">
+    {% if page_obj.has_previous %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}&q={{ q }}">&laquo;</a></li>{% endif %}
+    {% for i in page_obj.paginator.page_range %}
+    <li class="page-item {% if i == page_obj.number %}active{% endif %}"><a class="page-link" href="?page={{ i }}&q={{ q }}">{{ i }}</a></li>
+    {% endfor %}
+    {% if page_obj.has_next %}<li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}&q={{ q }}">&raquo;</a></li>{% endif %}
+  </ul></nav>
+  {% endif %}
+</div></section>
+{% endblock %}

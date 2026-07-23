@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ program.title }} — {{ site.name }}{% endblock %}
+{% block content %}
+{% include "core/_pagehead.html" with head_title=program.title %}
+<section class="py-5"><div class="container"><div class="row g-5">
+  <div class="col-lg-8">
+    <span class="pc-icon mb-3"><i class="bi bi-{{ program.icon|default:'mortarboard' }}"></i></span>
+    <h2>{{ program.title }}</h2>
+    <p>{{ program.description|linebreaks }}</p>
+  </div>
+  <div class="col-lg-4">
+    <div class="card border-0 shadow-sm"><div class="card-body">
+      <h6 class="mb-3">Ma'lumot</h6>
+      <p class="mb-2"><i class="bi bi-clock text-primary"></i> Muddat: <b>{{ program.duration }}</b></p>
+      <p class="mb-2"><i class="bi bi-mortarboard text-primary"></i> Diplom: <b>{{ program.diploma }}</b></p>
+      <p class="mb-2"><i class="bi bi-translate text-primary"></i> Til: <b>{{ program.language }}</b></p>
+      {% if program.grant_places %}<p class="mb-2"><i class="bi bi-award text-primary"></i> Grant: <b>{{ program.grant_places }}</b></p>{% endif %}
+      {% if program.contract_places %}<p class="mb-2"><i class="bi bi-cash-coin text-primary"></i> Kontrakt: <b>{{ program.contract_places }}</b></p>{% endif %}
+      {% if program.contract_price %}<p class="mb-3"><i class="bi bi-tag text-primary"></i> Summasi: <b>{{ program.contract_price }} so'm</b></p>{% endif %}
+      <a href="{% url 'admissions' %}" class="btn btn-primary w-100">Ariza topshirish</a>
+    </div></div>
+  </div>
+</div></div></section>
+{% endblock %}

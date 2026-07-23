@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Yo'nalishlar — {{ site.name }}{% endblock %}
+{% block content %}
+{% include "core/_pagehead.html" with head_title="Ta'lim yo'nalishlari" %}
+<section class="py-5"><div class="container">
+  <div class="row g-4">
+    {% for p in programs %}
+    <div class="col-md-6 col-lg-4"><div class="prog-detail-card">
+      <span class="pc-icon"><i class="bi bi-{{ p.icon|default:'mortarboard' }}"></i></span>
+      <h5>{{ p.title }}</h5>
+      <p class="small text-muted">{{ p.description|truncatewords:20 }}</p>
+      <ul class="prog-meta">
+        <li><i class="bi bi-clock"></i> {{ p.duration }}</li>
+        <li><i class="bi bi-translate"></i> {{ p.language }}</li>
+        {% if p.grant_places %}<li><i class="bi bi-award"></i> Grant: {{ p.grant_places }} o'rin</li>{% endif %}
+        {% if p.contract_places %}<li><i class="bi bi-cash-coin"></i> Kontrakt: {{ p.contract_places }} o'rin</li>{% endif %}
+      </ul>
+      <a href="{% url 'program_detail' p.slug %}" class="btn btn-sm btn-outline-primary w-100">Batafsil</a>
+    </div></div>
+    {% empty %}<p class="text-muted">Yo'nalishlar tez orada qo'shiladi.</p>{% endfor %}
+  </div>
+</div></section>
+{% endblock %}

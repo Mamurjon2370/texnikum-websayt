@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block title %}Qidiruv — {{ site.name }}{% endblock %}
+{% block content %}
+{% include "core/_pagehead.html" with head_title="Qidiruv natijalari" %}
+<section class="py-5"><div class="container">
+  <form class="row justify-content-center mb-4" method="get">
+    <div class="col-md-6"><div class="input-group">
+      <input class="form-control" name="q" value="{{ q }}" placeholder="Qidirish...">
+      <button class="btn btn-primary"><i class="bi bi-search"></i></button>
+    </div></div>
+  </form>
+  {% if q %}<p class="text-muted">"<b>{{ q }}</b>" bo'yicha natijalar</p>{% endif %}
+  {% if programs %}<h5 class="mt-4">Yo'nalishlar</h5><ul>{% for p in programs %}<li><a href="{% url 'program_detail' p.slug %}">{{ p.title }}</a></li>{% endfor %}</ul>{% endif %}
+  {% if news %}<h5 class="mt-4">Yangiliklar</h5><ul>{% for n in news %}<li><a href="{% url 'news_detail' n.slug %}">{{ n.title }}</a></li>{% endfor %}</ul>{% endif %}
+  {% if q and not programs and not news %}<p class="text-muted">Hech narsa topilmadi.</p>{% endif %}
+</div></section>
+{% endblock %}
