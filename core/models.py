@@ -1,5 +1,17 @@
+import os
+
+from django.core.files.storage import default_storage
 from django.db import models
 from django.utils import timezone
+
+
+def document_storage():
+    # Callable storage: Django migratsiyalarda buni import yo'li sifatida saqlaydi,
+    # shu bois muhitdan (Cloudinary bor/yo'q) mustaqil, barqaror migratsiya bo'ladi.
+    if os.environ.get("CLOUDINARY_URL"):
+        from cloudinary_storage.storage import RawMediaCloudinaryStorage
+        return RawMediaCloudinaryStorage()
+    return default_storage
 
 
 class SiteSettings(models.Model):
@@ -191,7 +203,7 @@ class GalleryImage(models.Model):
 class Document(models.Model):
     """Meyoriy hujjatlar, litsenziyalar (PDF)."""
     title = models.CharField("Nomi", max_length=255)
-    file = models.FileField("Fayl", upload_to="documents/")
+    file = models.FileField("Fayl", upload_to="documents/", storage=document_storage)
     uploaded_at = models.DateTimeField("Yuklangan sana", auto_now_add=True)
 
     class Meta:
