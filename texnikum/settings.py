@@ -18,8 +18,11 @@ INSTALLED_APPS = [
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
-    "cloudinary_storage",
     "django.contrib.staticfiles",
+    # staticfiles'dan KEYIN kelishi shart: aks holda cloudinary_storage o'zining
+    # collectstatic buyrug'i bilan whitenoise uchun kerakli fayllarni to'liq
+    # to'plamay qoladi (u faqat Cloudinary statik saqlashni nazarda tutadi).
+    "cloudinary_storage",
     "cloudinary",
     "core",
 ]
@@ -112,5 +115,9 @@ STORAGES = {
         "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
     },
 }
+
+# django-cloudinary-storage hali eski STATICFILES_STORAGE setting'ini o'qiydi
+# (Django 4.2+ dagi STORAGES dict'ini bilmaydi), shu bois uni qo'lda ham belgilaymiz.
+STATICFILES_STORAGE = STORAGES["staticfiles"]["BACKEND"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
