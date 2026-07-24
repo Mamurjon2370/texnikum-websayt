@@ -94,11 +94,11 @@ LANGUAGES = [
 ]
 
 # Statik va media fayllar
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-MEDIA_URL = "media/"
+MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 CLOUDINARY_CONFIGURED = bool(os.environ.get("CLOUDINARY_URL"))
@@ -112,16 +112,10 @@ STORAGES = {
         ),
     },
     "staticfiles": {
-        # Vercelda statik fayllar CDN'da (staticfiles distDir) turadi, lambda ichida
-        # emas. Shu sabab Manifest storage ishlatilmaydi (aks holda "Missing
-        # staticfiles manifest entry" 500 xatosi chiqadi). Oddiy storage {% static %}
-        # uchun /static/... URL'ini beradi, uni Vercel CDN xizmat qiladi.
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
+        "BACKEND": "whitenoise.storage.CompressedStaticFilesStorage",
     },
 }
 
-# django-cloudinary-storage hali eski STATICFILES_STORAGE setting'ini o'qiydi
-# (Django 4.2+ dagi STORAGES dict'ini bilmaydi), shu bois uni qo'lda ham belgilaymiz.
 STATICFILES_STORAGE = STORAGES["staticfiles"]["BACKEND"]
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

@@ -12,7 +12,7 @@
     }
   ],
   "routes": [
-    { "src": "/static/(.*)", "dest": "/staticfiles/$1" },
+    { "src": "/static/(.*)", "dest": "/$1" },
     { "src": "/(.*)", "dest": "texnikum/wsgi.py" }
   ]
 }
