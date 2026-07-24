@@ -112,7 +112,11 @@ STORAGES = {
         ),
     },
     "staticfiles": {
-        "BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage",
+        # Vercelda statik fayllar CDN'da (staticfiles distDir) turadi, lambda ichida
+        # emas. Shu sabab Manifest storage ishlatilmaydi (aks holda "Missing
+        # staticfiles manifest entry" 500 xatosi chiqadi). Oddiy storage {% static %}
+        # uchun /static/... URL'ini beradi, uni Vercel CDN xizmat qiladi.
+        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
     },
 }
 

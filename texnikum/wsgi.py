@@ -14,3 +14,6 @@ from django.core.wsgi import get_wsgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'texnikum.settings')
 
 application = get_wsgi_application()
+
+# Vercel WSGI callable'ni "app" nomi bilan kutadi
+app = application
